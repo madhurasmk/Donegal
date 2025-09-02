@@ -1,0 +1,52 @@
+select pvc_id, userid, sessionId, Resourcepath, Pagename, ErrorMEssage, ErrorType, saveDateTime, QuoteNumber,PolicyNumber, [Event.StatusCode]
+from FlattenPageViewData
+where  errortype ='dtoValidation Error' and SiteName ='PL CSS'
+--errormessage is not null and
+--select ErrorMessage from FlattenPageViewData where ErrorMessage is null
+UPDATE FlattenPageViewData
+SET PageName = 'viewdocuments', 
+ErrorMessage = NULL,
+ResourcePath = 'https://digitalpolicy-dev.azurewebsites.net/API/Submit/viewdocuments'
+where pvc_ID in (80290,132200)
+ 
+
+UPDATE FlattenPageViewData
+SET PageName = 'paymentportal', 
+ErrorMessage = NULL,
+ResourcePath = 'https://digitalpolicy-dev.azurewebsites.net/API/Submit/paymentportal'
+where pvc_ID in (196414,279256)
+ 
+
+ UPDATE FlattenPageViewData
+SET PageName = 'manageprofile', 
+ErrorMessage = NULL,
+ResourcePath = 'https://digitalpolicy-dev.azurewebsites.net/API/Submit/manageprofile'
+where pvc_ID in (287281, 290034)
+ 
+update FlattenPageViewData
+set [Event.StatusCode] = 417
+where 
+
+select pvc_id, userid, sessionId, Resourcepath, Pagename, ErrorMEssage, ErrorType, saveDateTime, QuoteNumber,PolicyNumber, [Event.StatusCode]
+from FlattenPageViewData
+where  --PageName = 'autoidcard' and -- ErrorMessage='Generate ID Card Failed' and SiteName = 'PL CSS' and 
+pvc_id in (236815,247743,269326,292219)
+
+
+UPDATE FlattenPageViewData
+SET [Event.StatusCode] = 417 
+where pvc_id in (236815,247743,269326,292219)
+
+
+select PolicyNumber, QuoteNumber, * from FlattenPageViewData where PageName = 'manageprofile'
+select pvc_id, userid, sessionId, Resourcepath, Pagename, ErrorMEssage, ErrorType, saveDateTime, QuoteNumber,PolicyNumber, [Event.StatusCode]
+from FlattenPageViewData 
+where  sitename = 'PL CSS' PageName in ('viewdocuments','paymentportal','manageprofile')
+and pvc_ID in (80290, 132200, 196414, 279256, 287281, 290034)
+
+
+
+update FlattenPageViewData
+set ErrorType = NULL, ErrorMessage =NULL 
+where  PageName in ('viewdocuments','paymentportal','manageprofile')
+and pvc_ID in (80290, 132200, 196414, 279256, 287281, 290034)
